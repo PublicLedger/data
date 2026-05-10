@@ -33,7 +33,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/svelte": "^4.0.5",
     "@types/eslint": "^8.56.0",
-    "@types/node": "^20",
+    "@types/node": "^25",
     "@vitest/coverage-v8": "^4.0.16",
     "@vitest/ui": "^4.0.16",
     "eslint": "^9.39.1",
