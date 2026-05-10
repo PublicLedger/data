@@ -22,7 +22,6 @@ describe("Layout Component", () => {
       "name='viewport'",
       "name='robots'",
       "name='author'",
-      "name='fediverse:creator'",
       "property='og:type'",
       "property='og:image'"
     ])(`renders expected 'meta[%s]' tag`, (name) => {
@@ -49,18 +48,11 @@ describe("Layout Component", () => {
       expect(charset?.getAttribute("charset")).toBe("utf-8");
     });
 
-    it("renders me as the meta['author'] tag", () => {
+    it("renders a meta['author'] tag", () => {
       const author = document.querySelector("meta[name='author']");
       expect(author).toBeInTheDocument();
       expect(author?.hasAttribute("content")).toBeTruthy();
-      expect(author?.getAttribute("content")).toContain("Tiff Fehr");
-    });
-
-    it("renders me as the meta['fediverse:creator'] tag", () => {
-      const author = document.querySelector("meta[name='fediverse:creator']");
-      expect(author).toBeInTheDocument();
-      expect(author?.hasAttribute("content")).toBeTruthy();
-      expect(author?.getAttribute("content")).toContain("@tiffehr@journa.host");
+      expect(author?.getAttribute("content")).toContain("devs");
     });
 
     it("preloads a font", () => {
@@ -90,80 +82,80 @@ describe("Layout Component", () => {
 
     it("renders the header with site title link", () => {
       const header = screen.getByRole("banner");
-      const headerLink = within(header).getByRole("link", { name: /News\s*Bots/i });
+      const headerLink = within(header).getByRole("link", { name: /Data API/i });
 
       expect(headerLink).toBeInTheDocument();
       expect(headerLink.getAttribute("href")).toBe("/");
     });
+  });
 
-    describe("<footer>", () => {
-      it("renders copyright information", () => {
-        const footer = container.querySelector("footer");
+  describe("<footer>", () => {
+    it("renders copyright information", () => {
+      const footer = container.querySelector("footer");
 
-        expect(footer).toBeInTheDocument();
-        expect(footer?.getAttribute("aria-label")).toBe("Site footer");
-      });
+      expect(footer).toBeInTheDocument();
+      expect(footer?.getAttribute("aria-label")).toBe("Site footer");
+    });
 
-      it("renders copyright symbol", () => {
-        const footer = container.querySelector("footer");
-        expect(footer).toBeInTheDocument();
-        expect(footer?.textContent).toContain("©");
-      });
+    it("renders copyright symbol", () => {
+      const footer = container.querySelector("footer");
+      expect(footer).toBeInTheDocument();
+      expect(footer?.textContent).toContain("©");
+    });
 
-      it("displays the News Bots link", () => {
-        const footer = screen.getByRole("contentinfo");
-        const links = screen.getAllByRole("link", { name: /News\s*Bots/i });
+    it("displays the Data API link", () => {
+      const footer = screen.getByRole("contentinfo");
+      const links = screen.getAllByRole("link", { name: /Data\s*API/i });
 
-        expect(links.some((link) => footer.contains(link))).toBe(true);
-      });
+      expect(links.some((link) => footer.contains(link))).toBe(true);
+    });
 
-      it("displays the Gasworks Data link", () => {
-        const gasworksLink = screen.getByRole("link", { name: /gasworks data/i });
+    it("displays the Gasworks Data link", () => {
+      const gasworksLink = screen.getByRole("link", { name: /gasworks data/i });
 
-        expect(gasworksLink).toBeInTheDocument();
-        expect(gasworksLink.getAttribute("href")).toBe("https://gasworksdata.com/");
-      });
+      expect(gasworksLink).toBeInTheDocument();
+      expect(gasworksLink.getAttribute("href")).toBe("https://gasworksdata.com/");
+    });
 
-      it("displays the human-made link", () => {
-        const humanMadeLink = screen.getByRole("link", { name: /human-made/i });
+    it("displays the human-made link", () => {
+      const humanMadeLink = screen.getByRole("link", { name: /human-made/i });
 
-        expect(humanMadeLink).toBeInTheDocument();
-        expect(humanMadeLink.getAttribute("href")).toBe("https://thehumanmade.org");
-      });
+      expect(humanMadeLink).toBeInTheDocument();
+      expect(humanMadeLink.getAttribute("href")).toBe("https://thehumanmade.org");
+    });
 
-      it("displays the human-made badge image", () => {
-        const badge = container.querySelector("img.human-made");
+    it("displays the human-made badge image", () => {
+      const badge = container.querySelector("img.human-made");
 
-        expect(badge).toBeInTheDocument();
-        expect(badge?.getAttribute("alt")).toBe("TheHumanMade badge");
-        expect(badge?.getAttribute("width")).toBe("50");
-        expect(badge?.getAttribute("height")).toBe("50");
-      });
+      expect(badge).toBeInTheDocument();
+      expect(badge?.getAttribute("alt")).toBe("TheHumanMade badge");
+      expect(badge?.getAttribute("width")).toBe("50");
+      expect(badge?.getAttribute("height")).toBe("50");
+    });
 
-      it("displays the current year in copyright", () => {
-        const footer = container.querySelector("footer");
-        const currentYear = new Date().getFullYear();
+    it("displays the current year in copyright", () => {
+      const footer = container.querySelector("footer");
+      const currentYear = new Date().getFullYear();
 
-        expect(footer?.textContent).toContain(currentYear.toString());
-      });
+      expect(footer?.textContent).toContain(currentYear.toString());
+    });
 
-      it("displays 'all rights reserved' text", () => {
-        const footer = container.querySelector("footer");
+    it("displays 'all rights reserved' text", () => {
+      const footer = container.querySelector("footer");
 
-        expect(footer?.textContent).toContain("All rights reserved");
-      });
+      expect(footer?.textContent).toContain("All rights reserved");
+    });
 
-      it("renders a JSON-LD schema.org block", () => {
-        const jsonLd = container.querySelector("script[type='application/ld+json']");
+    it("renders a JSON-LD schema.org block", () => {
+      const jsonLd = container.querySelector("script[type='application/ld+json']");
 
-        expect(jsonLd).toBeInTheDocument();
-      });
+      expect(jsonLd).toBeInTheDocument();
+    });
 
-      it("renders a darkvisitors script tag", () => {
-        const darkVisitors = container.querySelector("script[async]");
+    it("renders a darkvisitors script tag", () => {
+      const darkVisitors = container.querySelector("script[async]");
 
-        expect(darkVisitors).toBeInTheDocument();
-      });
+      expect(darkVisitors).toBeInTheDocument();
     });
   });
 });

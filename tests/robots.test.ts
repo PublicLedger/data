@@ -56,7 +56,7 @@ describe("robots.txt Server Endpoint", () => {
     });
 
     it("includes copyright notice", () => {
-      expect(content).toContain("Data API");
+      expect(content).toContain("data.publicledger.news");
       expect(content).toContain("non-commercial");
       expect(content).toContain("info@publicledger.news");
     });
