@@ -124,10 +124,10 @@ const robotsList = [
 export const GET = async () => {
   const sitemap = `
 # robots.txt for ${PUBLIC_BASE_URL}
-# News-Bots.org content is made available for your personal, non-commercial
+# data.publicledger.news content is made available for your personal, non-commercial
 # use only. You may not copy, reproduce, republish, upload, post, transmit,
 # or distribute in any way any material from this site for commercial use 
-# without prior written permission from News-Bots.org: info@news-bots.org
+# without prior written permission from Public Ledger: info@publicledger.news
 
 ${robotsList.map((bot) => `User-agent: ${bot}`).join("\n")}
 Disallow: /

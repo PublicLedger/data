@@ -31,7 +31,7 @@ describe("sitemap.xml Server Endpoint", () => {
 
   describe("Format Validation", () => {
     it("includes the site URL", () => {
-      expect(content).toContain("https://news-bots.org");
+      expect(content).toContain("https://data.publicledger.news");
     });
 
     it("includes <urlset> tag", () => {
@@ -55,7 +55,7 @@ describe("sitemap.xml Server Endpoint", () => {
       const res = await getWithFallback();
       const text = await res.text();
 
-      expect(text).toContain("https://news-bots.org");
+      expect(text).toContain("https://data.publicledger.news");
 
       vi.unmock("$env/static/public");
     });

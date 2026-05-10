@@ -15,9 +15,9 @@ vi.mock("$app/navigation", () => ({
 }));
 
 vi.mock("$env/static/public", () => ({
-  PUBLIC_BASE_URL: "https://news-bots.org",
-  PUBLIC_TITLE: "News Bots",
-  PUBLIC_TAGLINE: "news + bots = news-bots",
+  PUBLIC_BASE_URL: "https://data.publicledger.news",
+  PUBLIC_TITLE: "Public Ledger API",
+  PUBLIC_TAGLINE: "Public Ledger API",
   PUBLIC_RELEASE_VERSION: "1.0.0",
   PUBLIC_RELEASE_PUBLISHED_AT: "2026-01-01T00:00:00.000Z",
   PUBLIC_RELEASE_CREATED_AT: "2026-01-01T00:00:00.000Z"

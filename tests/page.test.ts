@@ -19,7 +19,7 @@ describe("Page", () => {
       const canonical = document.querySelector("link[rel='canonical']");
       expect(canonical).toBeInTheDocument();
       expect(canonical?.hasAttribute("href")).toBeTruthy();
-      expect(canonical?.getAttribute("href")).toContain("news-bots.org");
+      expect(canonical?.getAttribute("href")).toContain("data.publicledger.news");
       expect(canonical?.getAttribute("href")).not.toContain("www.");
     });
 
@@ -55,28 +55,10 @@ describe("Page", () => {
   });
 
   describe("<body>", () => {
-    it("displays the news emoji with correct attributes", () => {
-      const newsAbbr = container.querySelector("abbr#news");
-
-      expect(newsAbbr).toBeInTheDocument();
-      expect(newsAbbr?.textContent).toBe("📰");
-      expect(newsAbbr?.getAttribute("title")).toBe("news");
-    });
-
-    it("displays the bots emoji with correct attributes", () => {
-      const botsAbbr = container.querySelector("abbr#bots");
-
-      expect(botsAbbr).toBeInTheDocument();
-      expect(botsAbbr?.textContent).toBe("🤖");
-      expect(botsAbbr?.getAttribute("title")).toBe("bots");
-    });
-
-    it("displays the newsbot image with correct attributes", () => {
-      const img = container.querySelector("img#newsbot");
-
-      expect(img).toBeInTheDocument();
-      expect(img?.getAttribute("alt")).toBe("News-Bots");
-      expect(img?.getAttribute("src")).toBeTruthy();
+    it("displays starter text", () => {
+      const h2 = container.querySelector("h2");
+      expect(h2).toBeInTheDocument();
+      expect(h2?.textContent).toContain("coming soon");
     });
   });
 });

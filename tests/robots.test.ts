@@ -52,13 +52,13 @@ describe("robots.txt Server Endpoint", () => {
 
     it("includes the site URL in header comment", () => {
       expect(content).toContain("# robots.txt for");
-      expect(content).toContain("news-bots.org");
+      expect(content).toContain("data.publicledger.news");
     });
 
     it("includes copyright notice", () => {
-      expect(content).toContain("News-Bots");
+      expect(content).toContain("Data API");
       expect(content).toContain("non-commercial");
-      expect(content).toContain("info@news-bots.org");
+      expect(content).toContain("info@publicledger.news");
     });
 
     it("includes User-agent directives", () => {
@@ -123,8 +123,8 @@ describe("robots.txt Server Endpoint", () => {
       // We need to re-import the module to trigger the top-level catch
       try {
         await import("../src/routes/robots.txt/+server");
-      } catch (e: any) {
-        expect(e.message).toContain("Error generating robots.txt: API Error");
+      } catch (e: unknown) {
+        expect((e as Error).message).toContain("Error generating robots.txt: API Error");
       }
 
       vi.unmock("@darkvisitors/sdk");

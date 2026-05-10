@@ -10,23 +10,14 @@
     "sourceMap": true,
     "strict": true,
     "moduleResolution": "bundler",
-    "rootDirs": [
-      "..",
-      "./types"
-    ],
+    "rootDirs": ["..", "./types"],
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
-    "lib": [
-      "esnext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
     "module": "esnext",
     "noEmit": true,
     "target": "esnext",
-    "types": [
-      "vitest/globals"
-    ]
+    "types": ["vitest/globals"]
   },
   "exclude": [
     "../node_modules/**",

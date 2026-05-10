@@ -1,12 +1,11 @@
 {
-  "name": "news-bots",
+  "name": "publicledger-api",
   "private": true,
   "version": "0.0.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "prepare": "svelte-kit sync || echo ''",
-    "prebuild": "node scripts/fetch-release-data.js",
     "build": "vite build && cp CNAME build/",
     "preview": "vite preview",
     "deploy": "gh-pages -d build -t",

@@ -6,10 +6,10 @@ import {
   PUBLIC_RELEASE_PUBLISHED_AT,
   PUBLIC_RELEASE_CREATED_AT
 } from "$env/static/public";
-import newsBot from "$lib/assets/newsbot.png";
+import favicon from "$lib/assets/favicon.svg";
 
 export function generateSchemaJSContent(): string {
-  // GitHub release data fetched at build time
+  // GitHub release data passed from workflow at build time
   const version: string = PUBLIC_RELEASE_VERSION ?? "0.0.0";
   const datePublished: string = PUBLIC_RELEASE_PUBLISHED_AT ?? new Date().toISOString();
   const dateModified: string = PUBLIC_RELEASE_CREATED_AT ?? new Date().toISOString();
@@ -18,15 +18,15 @@ export function generateSchemaJSContent(): string {
     "@context": "https://schema.org",
     "@type": "SoftwareSourceCode",
     url: PUBLIC_BASE_URL,
-    image: newsBot,
-    name: "News-Bots.org Software",
+    image: favicon,
+    name: "Public Ledger API",
     version,
-    author: "Tiff Fehr",
+    author: "Public Ledger devs",
     datePublished,
     dateModified,
     programmingLanguage: "TypeScript",
-    // license: "https://github.com/news-bots/news-bots/blob/main/LICENSE",
-    codeRepository: "https://github.com/news-bots/news-bots/"
+    license: "https://data.publicledger.news/LICENSE",
+    codeRepository: "https://github.com/publicledger/data/"
   };
   const tagBody = JSON.stringify(data, null, 2).replace(/<\/script>/gi, "<\\/script>");
 

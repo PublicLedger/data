@@ -84,7 +84,7 @@ describe("Layout Component", () => {
     );
 
     it("has the correct main container id", () => {
-      const main = container.querySelector("main#news-bots");
+      const main = container.querySelector("main#data-app");
       expect(main).toBeInTheDocument();
     });
 

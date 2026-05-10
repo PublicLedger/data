@@ -1,6 +1,6 @@
-# news-bots
+# Public Ledger > Data API
 
-Homepage for news-bots project built with SvelteKit.
+Homepage for Public Ledger Data API project, built with SvelteKit.
 
 ## Development
 
@@ -42,14 +42,23 @@ npm run format
 
 ## Deployment
 
-This site is automatically deployed to GitHub Pages at `www.news-bots.com` when changes are pushed to the `main` branch.
+This site is automatically deployed to GitHub Pages at `data.publicledger.news` when changes are pushed to the `main` branch.
 
-The deployment workflow:
+### Setup
 
-1. Builds the SvelteKit app using `npm run build`
-2. Uploads the `build` directory to GitHub Pages
-3. The CNAME file ensures the site is served at `www.news-bots.com`
+To enable automatic deployment, ensure GitHub Pages is configured in your repository settings:
 
-### Manual Deployment
+1. Go to **Settings** → **Pages**
+2. Under **Build and deployment**, set **Source** to "GitHub Actions"
 
-You can also trigger a manual deployment from the Actions tab in GitHub by running the "Deploy to GitHub Pages" workflow.
+### Workflow
+
+The deployment workflow (`.github/workflows/release.yml`):
+
+1. **Creates a new GitHub Release** with auto-incremented patch version (e.g., v1.0.0 → v1.0.1)
+2. **Builds the SvelteKit app** using `npm run build`
+3. **Deploys to GitHub Pages**
+   - Uploads the `build` directory
+   - The CNAME file ensures the site is served at `data.publicledger.news`
+
+Each push to `main` automatically creates a new release and deploys the updated site.

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const mocks = vi.hoisted(() => ({
-  PUBLIC_BASE_URL: "https://news-bots.org",
+  PUBLIC_BASE_URL: "https://data.publicledger.news",
   PUBLIC_RELEASE_VERSION: "1.0.0",
   PUBLIC_RELEASE_PUBLISHED_AT: "2026-01-01T00:00:00.000Z",
   PUBLIC_RELEASE_CREATED_AT: "2026-01-01T00:00:00.000Z"
@@ -13,7 +13,7 @@ import { generateSchemaJSContent } from "../src/lib/utils";
 
 describe("utils.ts", () => {
   beforeEach(() => {
-    mocks.PUBLIC_BASE_URL = "https://news-bots.org";
+    mocks.PUBLIC_BASE_URL = "https://data.publicledger.news";
     mocks.PUBLIC_RELEASE_VERSION = "1.0.0";
     mocks.PUBLIC_RELEASE_PUBLISHED_AT = "2026-01-01T00:00:00.000Z";
     mocks.PUBLIC_RELEASE_CREATED_AT = "2026-01-01T00:00:00.000Z";
@@ -26,6 +26,7 @@ describe("utils.ts", () => {
 
       const jsonStr = content
         .replace('<script type="application/ld+json">', "")
+        // eslint-disable-next-line no-useless-escape
         .replace("<\/script>", "");
       const data = JSON.parse(jsonStr);
 
@@ -41,16 +42,17 @@ describe("utils.ts", () => {
     });
 
     it("uses default values when environment variables are missing", () => {
-      // @ts-ignore
+      // @ts-expect-error -- intentionally setting undefined to test default values
       mocks.PUBLIC_RELEASE_VERSION = undefined;
-      // @ts-ignore
+      // @ts-expect-error -- intentionally setting undefined to test default values
       mocks.PUBLIC_RELEASE_PUBLISHED_AT = undefined;
-      // @ts-ignore
+      // @ts-expect-error -- intentionally setting undefined to test default values
       mocks.PUBLIC_RELEASE_CREATED_AT = undefined;
 
       const content = generateSchemaJSContent();
       const jsonStr = content
         .replace('<script type="application/ld+json">', "")
+        // eslint-disable-next-line no-useless-escape
         .replace("<\/script>", "");
       const data = JSON.parse(jsonStr);
 

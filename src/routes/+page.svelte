@@ -1,6 +1,5 @@
 <script lang="ts">
   import { PUBLIC_BASE_URL, PUBLIC_TAGLINE, PUBLIC_TITLE } from "$env/static/public";
-  import newsBot from "$lib/assets/newsbot.png";
 </script>
 
 <svelte:head>
@@ -12,8 +11,4 @@
   <title>{PUBLIC_TITLE}</title>
 </svelte:head>
 
-<h2 aria-label="news bots">
-  <abbr id="news" title="news">📰</abbr>
-  <abbr id="bots" title="bots">🤖</abbr>
-  = <img id="newsbot" src={newsBot} alt="News-Bots" />
-</h2>
+<h2 aria-label="Data API">Docs and component library coming soon.</h2>
