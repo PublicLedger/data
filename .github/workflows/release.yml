@@ -66,6 +66,9 @@ jobs:
       - name: Build
         env:
           PUBLIC_BASE_URL: https://data.publicledger.news
+          PUBLIC_TITLE: "Public Ledger Data API & components"
+          PUBLIC_TAGLINE: "Data journalism for The Public Ledger"
+          PUBLIC_HINT_NAME: "Sec-CH-Prefers-Color-Scheme"
           PUBLIC_RELEASE_VERSION: ${{ needs.release.outputs.tag }}
           PUBLIC_RELEASE_PUBLISHED_AT: ${{ github.event.head_commit.timestamp }}
           PUBLIC_RELEASE_CREATED_AT: ${{ github.event.head_commit.timestamp }}
