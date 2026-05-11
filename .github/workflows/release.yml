@@ -65,6 +65,7 @@ jobs:
 
       - name: Build
         env:
+          PUBLIC_BASE_URL: https://data.publicledger.news
           PUBLIC_RELEASE_VERSION: ${{ needs.release.outputs.tag }}
           PUBLIC_RELEASE_PUBLISHED_AT: ${{ github.event.head_commit.timestamp }}
           PUBLIC_RELEASE_CREATED_AT: ${{ github.event.head_commit.timestamp }}
