@@ -106,26 +106,6 @@ npm run notebooks:strip         # Strip notebook outputs
 npm run notebooks:check-clean   # Verify notebooks are clean
 ```
 
-## File Organization
-
-```
-data/
-  raw_notebook_csvs/
-    county/Lancaster/          # County-level election data
-    state/Lancaster/           # State-level data for Lancaster
-notebooks/
-  Lancaster_county_scraper.ipynb
-  PA_state_scraper_county_specific.ipynb
-  shared_setup.py              # Reusable notebook utilities
-  shared_table_display.py
-src/
-  routes/                      # SvelteKit routes and API endpoints
-  lib/                         # Shared components and utilities
-.github/
-  agents/                      # Custom AI agents
-  skills/                      # Reusable AI workflows
-```
-
 ## Data Journalism Conventions
 
 ### Scraping Ethics
@@ -160,7 +140,7 @@ npm run notebooks:check-clean  # Verify notebooks are clean
 
 ## API Development
 
-### Endpoint Patterns
+### Endpoint Patterns (Projected)
 
 API routes follow SvelteKit conventions in `src/routes/`:
 
