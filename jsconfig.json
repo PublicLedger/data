@@ -3,9 +3,13 @@
     "target": "ES2022",
     "module": "esnext",
     "moduleDetection": "force",
-    "checkJs": false,
+    "checkJs": true,
+    "strict": false,
+    "noImplicitAny": false,
+    "strictNullChecks": false,
+    "allowJs": true,
     "lib": ["DOM", "ES2022"]
   },
-  "include": ["plugins/**/*.js", "plugins/**/*.d.ts"],
-  "exclude": ["node_modules", ".venv", "tmp"]
+  "include": ["src/**/*.js", "tests/**/*.js", "*.config.js"],
+  "exclude": ["node_modules", ".venv", "tmp", "build", "dist"]
 }
