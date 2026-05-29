@@ -1,0 +1,31 @@
+{
+  "name": "PublicLedger-Data",
+  "image": "mcr.microsoft.com/devcontainers/python:3.13",
+  "features": {
+    "ghcr.io/devcontainers/features/node:2.0.0": {
+      "version": "lts"
+    }
+  },
+  "updateRemoteUserUID": false,
+  "containerEnv": {
+    "INSTALL_PINNED_UV": "1"
+  },
+  "remoteEnv": {
+    "PATH": "${containerEnv:HOME}/.local/bin:${containerEnv:PATH}"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-keymap",
+        "ms-toolsai.jupyter-renderers",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": ".venv/bin/python"
+      }
+    }
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh"
+}
