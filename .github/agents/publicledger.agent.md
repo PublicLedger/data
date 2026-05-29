@@ -1,7 +1,7 @@
 ---
 description: "Data journalism specialist for election data ingestion, processing, warehousing, and API development. Use when: working with Pennsylvania election data, Lancaster County results, data scraping notebooks, pandas data processing, election result APIs, data visualization pipelines, voter registration analysis, county/state election scrapers, or Public Ledger data infrastructure."
 tools: [read, edit, search, execute, todo]
-name: "Data Journalism Pipeline"
+name: "publicledger"
 argument-hint: "Describe the data task (scrape, clean, analyze, or serve election data)"
 ---
 
