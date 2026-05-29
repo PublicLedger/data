@@ -4,14 +4,43 @@ set -e
 # UV version pinned here for reproducibility
 # When updating, get checksums from: https://github.com/astral-sh/uv/releases/tag/{version}
 UV_VERSION="0.5.10"
-UV_X86_SHA256="13452b7a99d953e970ec52861de03f6f2e00bfee2c4357bc63c292a70472b386"
-UV_AARCH64_SHA256="f4316a657c964994d7eb736ba875f3f685c4b61e961f514e98fb50ed181da72a"
 
-# Install GitHub CLI if needed
+# Check if system packages need installation
+NEEDS_APT_UPDATE=0
+if ! command -v shellcheck >/dev/null 2>&1; then
+  NEEDS_APT_UPDATE=1
+fi
 if ! command -v gh >/dev/null 2>&1; then
-  echo "📦 Installing GitHub CLI..."
+  NEEDS_APT_UPDATE=1
+fi
+
+# Install system packages if needed
+if [[ "$NEEDS_APT_UPDATE" -eq 1 ]]; then
+  echo "📦 Installing system packages..."
   sudo apt-get update -qq
-  sudo apt-get install -y -qq gh
+  
+  if ! command -v shellcheck >/dev/null 2>&1; then
+    echo "   Installing shellcheck..."
+    sudo apt-get install -y -qq shellcheck
+  fi
+  
+  if ! command -v gh >/dev/null 2>&1; then
+    echo "   Installing GitHub CLI..."
+    sudo apt-get install -y -qq gh
+  fi
+  
+  echo "   ✅ System packages installed"
+fi
+
+# Check if uv needs installation or upgrade
+INSTALL_PINNED_UV=0
+if ! command -v uv >/dev/null 2>&1; then
+  INSTALL_PINNED_UV=1
+else
+  INSTALLED_UV_VERSION="$(uv --version 2>/dev/null | awk '{print $2}')"
+  if [[ "${INSTALLED_UV_VERSION}" != "${UV_VERSION}" ]]; then
+    INSTALL_PINNED_UV=1
+  fi
 fi
 
 if [[ "${INSTALL_PINNED_UV}" -eq 1 ]]; then
@@ -19,12 +48,12 @@ if [[ "${INSTALL_PINNED_UV}" -eq 1 ]]; then
   
   case "$(uname -m)" in
     x86_64)
-      UV_SHA256="${UV_X86_SHA256}"
       UV_ARCHIVE="uv-x86_64-unknown-linux-gnu.tar.gz"
+      UV_SHA256="13452b7a99d953e970ec52861de03f6f2e00bfee2c4357bc63c292a70472b386"
       ;;
     aarch64)
-      UV_SHA256="${UV_AARCH64_SHA256}"
       UV_ARCHIVE="uv-aarch64-unknown-linux-gnu.tar.gz"
+      UV_SHA256="f4316a657c964994d7eb736ba875f3f685c4b61e961f514e98fb50ed181da72a"
       ;;
     *)
       echo "Error: unsupported architecture: $(uname -m)" >&2

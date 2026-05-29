@@ -7,9 +7,6 @@
     }
   },
   "updateRemoteUserUID": false,
-  "containerEnv": {
-    "INSTALL_PINNED_UV": "1"
-  },
   "remoteEnv": {
     "PATH": "${containerEnv:HOME}/.local/bin:${containerEnv:PATH}"
   },
@@ -20,7 +17,12 @@
         "ms-toolsai.jupyter",
         "ms-toolsai.jupyter-keymap",
         "ms-toolsai.jupyter-renderers",
-        "esbenp.prettier-vscode"
+        "ms-toolsai.vscode-jupyter-cell-tags",
+        "ms-toolsai.vscode-jupyter-slideshow",
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "redhat.vscode-yaml",
+        "github.vscode-pull-request-github"
       ],
       "settings": {
         "python.defaultInterpreterPath": ".venv/bin/python"
