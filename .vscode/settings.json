@@ -31,5 +31,10 @@
   },
   "yaml.schemas": {
     "https://json.schemastore.org/github-workflow.json": ".github/workflows/*.yml"
-  }
+  },
+
+  // Testing
+  "vitest.enable": true,
+  "vitest.commandLine": "npm run test:watch",
+  "testing.automaticallyOpenPeekView": "failureInVisibleDocument"
 }
