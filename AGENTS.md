@@ -1,0 +1,261 @@
+# AGENTS.md
+
+Instructions for AI coding assistants working on the Public Ledger data API project.
+
+## Project Overview
+
+Public Ledger data API — a public-facing data journalism platform serving Pennsylvania election results through SvelteKit APIs and data visualizations. This repository handles the complete data pipeline from scraping county election sites to serving structured JSON endpoints.
+
+**This is production infrastructure serving public data.** Accuracy and reliability are critical.
+
+## Tech Stack
+
+### Frontend & API
+- **SvelteKit** — SSG/SPA framework serving static build and API routes
+- **TypeScript** — Type-safe API endpoints and utilities
+- **Vite** — Build tool and dev server
+- **Vitest** — Testing framework
+
+### Data Pipeline
+- **Python 3.13+** — Data scraping and processing
+- **Jupyter Lab** — Interactive data exploration notebooks
+- **pandas** — Data manipulation and analysis
+- **pytest** — Data validation testing
+- **uv** — Python dependency management
+
+### Quality & Automation
+- **ESLint** — JavaScript/TypeScript linting
+- **Prettier** — Code formatting
+- **Ruff** — Python linting and formatting
+- **pre-commit** — Git hooks for quality checks
+
+## Setup
+
+### SvelteKit Development
+
+```bash
+npm install          # Install dependencies
+npm run dev          # Start dev server (localhost:5173)
+npm run build        # Build static site
+npm run preview      # Preview production build
+npm test             # Run test suite
+```
+
+### Python Data Pipeline
+
+```bash
+uv sync              # Install Python dependencies
+jupyter lab          # Launch notebook environment
+```
+
+### Quality Checks
+
+```bash
+npm run lint         # Check code style
+npm run lint:fix     # Auto-fix linting issues
+npm run check        # Svelte type checking
+npm run notebooks:strip         # Strip notebook outputs
+npm run notebooks:check-clean   # Verify notebooks are clean
+```
+
+## File Organization
+
+```
+data/
+  raw_notebook_csvs/
+    county/Lancaster/          # County-level election data
+    state/Lancaster/           # State-level data for Lancaster
+notebooks/
+  Lancaster_county_scraper.ipynb
+  PA_state_scraper_county_specific.ipynb
+  shared_setup.py              # Reusable notebook utilities
+  shared_table_display.py
+src/
+  routes/                      # SvelteKit routes and API endpoints
+  lib/                         # Shared components and utilities
+.github/
+  agents/                      # Custom AI agents
+  skills/                      # Reusable AI workflows
+```
+
+## Data Journalism Conventions
+
+### Scraping Ethics
+
+**Always respect source site policies:**
+- Check robots.txt before scraping any domain
+- Use custom UserAgent: `PublicLedgerBot/1.0 (+https://publicledger.news/bot; contact@publicledger.news)`
+- Add 1-2 second delays between requests
+- Cache responses to avoid duplicate requests
+- Scrape during off-peak hours when possible
+- Contact webmasters for large-scale scraping
+
+### Data Quality Standards
+
+- Verify totals match official sources
+- Check for duplicate or missing precincts
+- Validate date formats and election types
+- Ensure historical consistency
+- Document all data sources and transformations
+- Include metadata (source, updated_at, version) in outputs
+
+### Notebook Hygiene
+
+**Critical:** Notebooks can contain sensitive data or credentials
+
+```bash
+npm run notebooks:strip        # Strip outputs before committing
+npm run notebooks:check-clean  # Verify notebooks are clean
+```
+
+**Never commit notebooks with outputs.** Use pre-commit hooks to enforce this.
+
+## API Development
+
+### Endpoint Patterns
+
+API routes follow SvelteKit conventions in `src/routes/`:
+
+```
+src/routes/
+  api/
+    results/
+      [year]/+server.ts        # /api/results/2024
+    precincts/
+      [id]/+server.ts          # /api/precincts/01-001
+    counties/
+      [name]/
+        summary/+server.ts     # /api/counties/Lancaster/summary
+```
+
+### Response Format
+
+All API responses must include metadata:
+
+```typescript
+{
+  "election_date": "2024-05-16",
+  "election_type": "primary",
+  "county": "Lancaster",
+  "precincts": [...],
+  "races": [...],
+  "metadata": {
+    "source": "Lancaster County Board of Elections",
+    "source_url": "https://...",
+    "updated_at": "2024-05-17T08:30:00Z",
+    "version": "1.0"
+  }
+}
+```
+
+### Testing APIs
+
+Use the `test-api-endpoint` skill:
+
+```bash
+/test-api-endpoint /api/results/2024
+```
+
+Or run directly:
+
+```bash
+node .github/skills/test-api-endpoint/scripts/test-endpoint.js /api/results/2024
+```
+
+## Code Style
+
+### TypeScript/JavaScript
+
+- 2-space indentation
+- No semicolons (configured in Prettier)
+- Trailing commas in objects/arrays
+- Arrow functions preferred over function expressions
+- Use const/let, never var
+
+### Python (Notebooks)
+
+- 2-space indentation in notebooks (not 4)
+- Modern type hints: `list[str]`, `dict[str, int]`, `X | None`
+- Use pandas for data manipulation
+- Use tqdm for progress bars
+- Handle secrets via environment variables
+
+### Markdown
+
+- No periods in bullet points (unless multi-sentence)
+- No Oxford commas (unless needed for clarity)
+- Use asterisks for lists, not dashes
+- Concise writing — avoid verbosity
+
+## Testing
+
+### TypeScript Tests
+
+```bash
+npm test                 # Run all tests
+npm run test:coverage    # With coverage report
+```
+
+### Python Data Validation
+
+```bash
+uv run pytest tests/ -v
+```
+
+### Pre-commit Hooks
+
+```bash
+pre-commit run --all-files
+```
+
+Hooks enforce:
+- Ruff lint and format (Python)
+- Trailing whitespace removal
+- End-of-file fixer
+- YAML/TOML/JSON validation
+- Large file guards (99 MB limit)
+
+## Custom Agents
+
+This project includes specialized AI agents in `.github/agents/`:
+
+### Data Journalism Pipeline
+
+Invoke with `@data-journalism` for:
+- Election data scraping and processing
+- Data quality validation
+- API endpoint development
+- Notebook organization and cleanup
+
+See [.github/agents/data-journalism.agent.md](.github/agents/data-journalism.agent.md) for details.
+
+## Deployment
+
+GitHub Actions (`.github/workflows/`) handles CI/CD:
+
+1. **Test** — Run TypeScript and Python test suites
+2. **Build** — `npm run build` generates static site
+3. **Deploy** — Upload to hosting (main branch only)
+
+## Communication Guidelines
+
+### For Developers
+- Technical precision, reference specific files/functions
+- Use conventional commit messages
+- Document breaking changes clearly
+
+### For Journalists/Editors
+- Plain language explanations
+- Focus on editorial impact and data accuracy
+- Avoid unnecessary jargon
+
+### For Data Reporters
+- Balance technical accuracy with accessibility
+- Provide reproducible examples
+- Cite sources and methodology
+
+## Related Resources
+
+- **Project site:** https://data.publicledger.news
+- **Organization:** https://publicledger.news
+- **Repository:** https://github.com/PublicLedger/data

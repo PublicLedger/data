@@ -1,0 +1,227 @@
+{
+  "examples": {
+    "election_results_2024": {
+      "description": "Full election results for Lancaster County 2024 Primary",
+      "response": {
+        "election_date": "2024-05-16",
+        "election_type": "primary",
+        "county": "Lancaster",
+        "precincts": [
+          {
+            "precinct_id": "01-001",
+            "precinct_name": "Adamstown Borough",
+            "registered_voters": 1234,
+            "ballots_cast": 567,
+            "turnout_pct": 45.9
+          },
+          {
+            "precinct_id": "02-001",
+            "precinct_name": "Akron Borough",
+            "registered_voters": 2345,
+            "ballots_cast": 891,
+            "turnout_pct": 38.0
+          }
+        ],
+        "races": [
+          {
+            "race_name": "Democratic Primary - President",
+            "race_type": "presidential",
+            "party": "Democratic",
+            "total_votes": 12456,
+            "candidates": [
+              {
+                "candidate_name": "Joe Biden",
+                "votes": 11234,
+                "vote_pct": 90.2
+              },
+              {
+                "candidate_name": "Write-In",
+                "votes": 1222,
+                "vote_pct": 9.8
+              }
+            ]
+          },
+          {
+            "race_name": "Republican Primary - President",
+            "race_type": "presidential",
+            "party": "Republican",
+            "total_votes": 23456,
+            "candidates": [
+              {
+                "candidate_name": "Donald Trump",
+                "votes": 21234,
+                "vote_pct": 90.5
+              },
+              {
+                "candidate_name": "Nikki Haley",
+                "votes": 2222,
+                "vote_pct": 9.5
+              }
+            ]
+          }
+        ],
+        "metadata": {
+          "source": "Lancaster County Board of Elections",
+          "source_url": "https://example.com/results",
+          "updated_at": "2024-05-17T08:30:00Z",
+          "version": "1.0",
+          "scrape_date": "2024-05-17"
+        }
+      }
+    },
+    
+    "precinct_detail": {
+      "description": "Detailed results for a single precinct",
+      "response": {
+        "precinct_id": "01-001",
+        "precinct_name": "Adamstown Borough",
+        "county": "Lancaster",
+        "election_date": "2024-05-16",
+        "election_type": "primary",
+        "registered_voters": 1234,
+        "ballots_cast": 567,
+        "turnout_pct": 45.9,
+        "races": [
+          {
+            "race_name": "Democratic Primary - President",
+            "party": "Democratic",
+            "votes_in_precinct": 234,
+            "candidates": [
+              {
+                "candidate_name": "Joe Biden",
+                "votes": 212,
+                "vote_pct": 90.6
+              },
+              {
+                "candidate_name": "Write-In",
+                "votes": 22,
+                "vote_pct": 9.4
+              }
+            ]
+          }
+        ],
+        "metadata": {
+          "source": "Lancaster County Board of Elections",
+          "updated_at": "2024-05-17T08:30:00Z"
+        }
+      }
+    },
+    
+    "county_summary": {
+      "description": "Summary statistics for Lancaster County",
+      "response": {
+        "county": "Lancaster",
+        "election_date": "2024-05-16",
+        "election_type": "primary",
+        "total_precincts": 142,
+        "precincts_reporting": 142,
+        "reporting_pct": 100,
+        "total_registered_voters": 345678,
+        "total_ballots_cast": 156234,
+        "total_turnout_pct": 45.2,
+        "party_breakdown": {
+          "Democratic": {
+            "ballots_cast": 67890,
+            "pct_of_total": 43.5
+          },
+          "Republican": {
+            "ballots_cast": 88344,
+            "pct_of_total": 56.5
+          }
+        },
+        "metadata": {
+          "source": "Lancaster County Board of Elections",
+          "updated_at": "2024-05-17T08:30:00Z"
+        }
+      }
+    },
+    
+    "historical_trends": {
+      "description": "Historical turnout trends for a race type",
+      "response": {
+        "race_type": "presidential_primary",
+        "county": "Lancaster",
+        "elections": [
+          {
+            "election_date": "2024-05-16",
+            "turnout_pct": 45.2,
+            "total_voters": 345678,
+            "ballots_cast": 156234
+          },
+          {
+            "election_date": "2020-06-02",
+            "turnout_pct": 37.8,
+            "total_voters": 334567,
+            "ballots_cast": 126445
+          },
+          {
+            "election_date": "2016-04-26",
+            "turnout_pct": 42.1,
+            "total_voters": 318923,
+            "ballots_cast": 134267
+          }
+        ],
+        "metadata": {
+          "source": "Lancaster County Board of Elections",
+          "years_covered": "2016-2024",
+          "updated_at": "2024-05-17T08:30:00Z"
+        }
+      }
+    },
+    
+    "error_not_found": {
+      "description": "404 error response for missing data",
+      "response": {
+        "error": "Not Found",
+        "message": "No election data found for year 1900",
+        "status": 404
+      }
+    },
+    
+    "error_invalid_request": {
+      "description": "400 error response for invalid parameters",
+      "response": {
+        "error": "Bad Request",
+        "message": "Invalid precinct ID format",
+        "status": 400,
+        "details": {
+          "parameter": "precinct_id",
+          "expected": "string matching pattern XX-XXX",
+          "received": "invalid"
+        }
+      }
+    }
+  },
+  
+  "schema_definitions": {
+    "precinct_object": {
+      "precinct_id": "string",
+      "precinct_name": "string",
+      "registered_voters": "number",
+      "ballots_cast": "number",
+      "turnout_pct": "number (0-100)"
+    },
+    
+    "race_object": {
+      "race_name": "string",
+      "race_type": "string (presidential|senate|house|state|local)",
+      "party": "string|null",
+      "total_votes": "number",
+      "candidates": "array of candidate objects"
+    },
+    
+    "candidate_object": {
+      "candidate_name": "string",
+      "votes": "number",
+      "vote_pct": "number (0-100)"
+    },
+    
+    "metadata_object": {
+      "source": "string (required)",
+      "source_url": "string (optional)",
+      "updated_at": "ISO 8601 datetime (required)",
+      "version": "string (optional)",
+      "scrape_date": "ISO 8601 date (optional)"
+    }
+  }
+}
