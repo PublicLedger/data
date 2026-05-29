@@ -69,7 +69,7 @@
         }
       }
     },
-    
+
     "precinct_detail": {
       "description": "Detailed results for a single precinct",
       "response": {
@@ -106,7 +106,7 @@
         }
       }
     },
-    
+
     "county_summary": {
       "description": "Summary statistics for Lancaster County",
       "response": {
@@ -135,7 +135,7 @@
         }
       }
     },
-    
+
     "historical_trends": {
       "description": "Historical turnout trends for a race type",
       "response": {
@@ -168,7 +168,7 @@
         }
       }
     },
-    
+
     "error_not_found": {
       "description": "404 error response for missing data",
       "response": {
@@ -177,7 +177,7 @@
         "status": 404
       }
     },
-    
+
     "error_invalid_request": {
       "description": "400 error response for invalid parameters",
       "response": {
@@ -192,7 +192,7 @@
       }
     }
   },
-  
+
   "schema_definitions": {
     "precinct_object": {
       "precinct_id": "string",
@@ -201,7 +201,7 @@
       "ballots_cast": "number",
       "turnout_pct": "number (0-100)"
     },
-    
+
     "race_object": {
       "race_name": "string",
       "race_type": "string (presidential|senate|house|state|local)",
@@ -209,13 +209,13 @@
       "total_votes": "number",
       "candidates": "array of candidate objects"
     },
-    
+
     "candidate_object": {
       "candidate_name": "string",
       "votes": "number",
       "vote_pct": "number (0-100)"
     },
-    
+
     "metadata_object": {
       "source": "string (required)",
       "source_url": "string (optional)",
