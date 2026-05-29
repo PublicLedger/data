@@ -22,7 +22,8 @@
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
         "redhat.vscode-yaml",
-        "github.vscode-pull-request-github"
+        "github.vscode-pull-request-github",
+        "vitest.explorer"
       ],
       "settings": {
         "python.defaultInterpreterPath": ".venv/bin/python"
