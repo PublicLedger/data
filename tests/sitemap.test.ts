@@ -48,7 +48,7 @@ describe("sitemap.xml Server Endpoint", () => {
 
     it("falls back to default URL when PUBLIC_BASE_URL is missing", async () => {
       vi.doMock("$env/static/public", () => ({
-        PUBLIC_BASE_URL: undefined
+        PUBLIC_BASE_URL: undefined,
       }));
 
       const { GET: getWithFallback } = await import("../src/routes/sitemap.xml/+server");

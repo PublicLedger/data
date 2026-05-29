@@ -15,7 +15,7 @@ export const GET = async () => {
 >
   ${routes
     .map(
-      (route) => `<url>
+      route => `<url>cont
     <loc>${baseUrl}${route}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
     <changefreq>weekly</changefreq>
@@ -27,7 +27,7 @@ export const GET = async () => {
 
   return new Response(sitemap, {
     headers: {
-      "Content-Type": "application/xml"
-    }
+      "Content-Type": "application/xml",
+    },
   });
 };

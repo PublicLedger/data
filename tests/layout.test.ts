@@ -12,7 +12,7 @@ describe("Layout Component", () => {
     container = component.container;
   });
 
-  it.each(["html", "head", "body"])("renders a <%s> tag", (tag) => {
+  it.each(["html", "head", "body"])("renders a <%s> tag", tag => {
     const el = document.querySelector(tag);
     expect(el).toBeInTheDocument();
   });
@@ -23,8 +23,8 @@ describe("Layout Component", () => {
       "name='robots'",
       "name='author'",
       "property='og:type'",
-      "property='og:image'"
-    ])(`renders expected 'meta[%s]' tag`, (name) => {
+      "property='og:image'",
+    ])(`renders expected 'meta[%s]' tag`, name => {
       const meta = document.querySelector(`meta[${name}]`);
       expect(meta).toBeInTheDocument();
       expect(meta?.hasAttribute("content")).toBeTruthy();
@@ -67,13 +67,10 @@ describe("Layout Component", () => {
       expect(container).toBeTruthy();
     });
 
-    it.each(["header", "h1", "main", "footer", "h2"])(
-      `renders the correct <%s> structure`,
-      (tag) => {
-        const main = container.querySelector(tag);
-        expect(main).toBeInTheDocument();
-      }
-    );
+    it.each(["header", "h1", "main", "footer", "h2"])(`renders the correct <%s> structure`, tag => {
+      const main = container.querySelector(tag);
+      expect(main).toBeInTheDocument();
+    });
 
     it("has the correct main container id", () => {
       const main = container.querySelector("main#data-app");
@@ -107,7 +104,7 @@ describe("Layout Component", () => {
       const footer = screen.getByRole("contentinfo");
       const links = screen.getAllByRole("link", { name: /Data\s*API/i });
 
-      expect(links.some((link) => footer.contains(link))).toBe(true);
+      expect(links.some(link => footer.contains(link))).toBe(true);
     });
 
     it("displays the Gasworks Data link", () => {

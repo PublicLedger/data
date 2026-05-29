@@ -18,7 +18,7 @@ export default ts.config(
   ...svelte.configs.prettier,
   {
     languageOptions: {
-      globals: { ...globals.browser, ...globals.node }
+      globals: { ...globals.browser, ...globals.node },
     },
     rules: {
       // typescript-eslint strongly recommend that you do not use the no-undef lint rule on TypeScript projects.
@@ -28,11 +28,11 @@ export default ts.config(
       // dynamic each blocks. I.e. we don't typically expect elements in
       // #each to be added/deleted/reordered). If your each block does
       // have these characteristics, you definitely *should* add a key!
-      "svelte/require-each-key": "off"
-    }
+      "svelte/require-each-key": "off",
+    },
   },
   {
-    ignores: ["static/**", "/static/**", "**/static/**", "ambient.d.ts", "non-ambient.d.ts"]
+    ignores: ["static/**", "/static/**", "**/static/**", "ambient.d.ts", "non-ambient.d.ts"],
   },
   {
     files: ["**/*.svelte", "**/*.svelte.ts", "**/*.svelte.js"],
@@ -41,8 +41,8 @@ export default ts.config(
         projectService: true,
         extraFileExtensions: [".svelte"],
         parser: ts.parser,
-        svelteConfig
-      }
-    }
+        svelteConfig,
+      },
+    },
   }
 );

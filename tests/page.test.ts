@@ -40,7 +40,7 @@ describe("Page", () => {
 
     it.each(["og:url", "og:description", "og:title"])(
       "renders the correct <meta property='%s'> tag",
-      (tag) => {
+      tag => {
         const meta = document.querySelector(`meta[property='${tag}']`);
         expect(meta).toBeInTheDocument();
         expect(meta).toHaveAttribute("content");

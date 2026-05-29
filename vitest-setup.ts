@@ -5,13 +5,13 @@ import "@testing-library/jest-dom/vitest";
 // Mock SvelteKit modules
 vi.mock("$app/paths", () => ({
   base: "",
-  resolve: (path: string) => path
+  resolve: (path: string) => path,
 }));
 
 vi.mock("$app/navigation", () => ({
   goto: vi.fn(),
   afterNavigate: vi.fn(),
-  beforeNavigate: vi.fn()
+  beforeNavigate: vi.fn(),
 }));
 
 vi.mock("$env/static/public", () => ({
@@ -20,7 +20,7 @@ vi.mock("$env/static/public", () => ({
   PUBLIC_TAGLINE: "Public Ledger API",
   PUBLIC_RELEASE_VERSION: "1.0.0",
   PUBLIC_RELEASE_PUBLISHED_AT: "2026-01-01T00:00:00.000Z",
-  PUBLIC_RELEASE_CREATED_AT: "2026-01-01T00:00:00.000Z"
+  PUBLIC_RELEASE_CREATED_AT: "2026-01-01T00:00:00.000Z",
 }));
 
 // Cleanup after each test

@@ -4,7 +4,7 @@ import {
   PUBLIC_BASE_URL,
   PUBLIC_RELEASE_VERSION,
   PUBLIC_RELEASE_PUBLISHED_AT,
-  PUBLIC_RELEASE_CREATED_AT
+  PUBLIC_RELEASE_CREATED_AT,
 } from "$env/static/public";
 import favicon from "$lib/assets/favicon.svg";
 
@@ -26,7 +26,7 @@ export function generateSchemaJSContent(): string {
     dateModified,
     programmingLanguage: "TypeScript",
     license: "https://data.publicledger.news/LICENSE",
-    codeRepository: "https://github.com/publicledger/data/"
+    codeRepository: "https://github.com/publicledger/data/",
   };
   const tagBody = JSON.stringify(data, null, 2).replace(/<\/script>/gi, "<\\/script>");
 

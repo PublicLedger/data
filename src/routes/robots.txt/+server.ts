@@ -14,7 +14,7 @@ try {
       AgentType.AIDataScraper,
       // AgentType.Scraper,
       AgentType.IntelligenceGatherer,
-      AgentType.SEOCrawler
+      AgentType.SEOCrawler,
     ],
     "/"
   );
@@ -117,7 +117,7 @@ const robotsList = [
   "YaK",
   "YandexAdditional",
   "YandexAdditionalBot",
-  "YouBot"
+  "YouBot",
 ];
 
 // TODO: future dedupe with darkVisitors set
@@ -129,14 +129,14 @@ export const GET = async () => {
 # or distribute in any way any material from this site for commercial use 
 # without prior written permission from Public Ledger: info@publicledger.news
 
-${robotsList.map((bot) => `User-agent: ${bot}`).join("\n")}
+${robotsList.map(bot => `User-agent: ${bot}`).join("\n")}
 Disallow: /
 
 ${robotsTxt}`;
 
   return new Response(sitemap, {
     headers: {
-      "Content-Type": "text/plain"
-    }
+      "Content-Type": "text/plain",
+    },
   });
 };

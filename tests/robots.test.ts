@@ -33,8 +33,8 @@ describe("robots.txt Server Endpoint", () => {
     it("has proper robots.txt format", () => {
       // Should have User-agent lines followed by Disallow
       const lines = content.split("\n");
-      const userAgentLines = lines.filter((line) => line.startsWith("User-agent:"));
-      const disallowLines = lines.filter((line) => line.startsWith("Disallow:"));
+      const userAgentLines = lines.filter(line => line.startsWith("User-agent:"));
+      const disallowLines = lines.filter(line => line.startsWith("Disallow:"));
 
       expect(userAgentLines.length).toBeGreaterThan(0);
       expect(disallowLines.length).toBeGreaterThan(0);
@@ -42,9 +42,9 @@ describe("robots.txt Server Endpoint", () => {
 
     it("does not have trailing whitespace issues", () => {
       const lines = content.split("\n");
-      const userAgentLines = lines.filter((line) => line.startsWith("User-agent:"));
+      const userAgentLines = lines.filter(line => line.startsWith("User-agent:"));
 
-      userAgentLines.forEach((line) => {
+      userAgentLines.forEach(line => {
         // User-agent lines should be properly formatted
         expect(line).toMatch(/^User-agent: .+$/);
       });
@@ -80,7 +80,7 @@ describe("robots.txt Server Endpoint", () => {
 
     it.each(["GPTBot", "PerplexityBot", "anthropic-ai", "ChatGPT-User", "Amazonbot"])(
       "blocks Critical AI bot %s",
-      (bot) => {
+      bot => {
         expect(content).toContain(`User-agent: ${bot}`);
       }
     );
@@ -110,13 +110,13 @@ describe("robots.txt Server Endpoint", () => {
           AgentType: {
             AIDataScraper: "AIDataScraper",
             IntelligenceGatherer: "IntelligenceGatherer",
-            SEOCrawler: "SEOCrawler"
+            SEOCrawler: "SEOCrawler",
           },
           DarkVisitors: class {
             generateRobotsTxt() {
               return Promise.reject("API Error");
             }
-          }
+          },
         };
       });
 

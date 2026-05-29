@@ -20,7 +20,7 @@ export default defineConfig({
         "types/**",
         "static/*.{png,jpg,jpeg,gif,svg,webp,pdf}",
         "**/*.d.ts",
-        "**/*.scss"
+        "**/*.scss",
       ],
       // all: true,
       // Note: Branch coverage for Svelte components may show false negatives
@@ -31,12 +31,12 @@ export default defineConfig({
         statements: 95,
         branches: 78, // Lower threshold accounts for Svelte compiler artifacts
         functions: 95,
-        lines: 95
-      }
-    }
+        lines: 95,
+      },
+    },
   },
   build: {
     sourcemap: true,
-    minify: true
-  }
+    minify: true,
+  },
 });

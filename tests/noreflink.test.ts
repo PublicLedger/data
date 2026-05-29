@@ -12,7 +12,7 @@ describe("NorefLink svelte component", () => {
 
   it("passes through other attributes", () => {
     render(NorefLink, {
-      props: { to: "https://example.com", class: "custom-class", target: "_blank" }
+      props: { to: "https://example.com", class: "custom-class", target: "_blank" },
     });
     const link = screen.getByRole("link");
     expect(link).toHaveClass("custom-class");

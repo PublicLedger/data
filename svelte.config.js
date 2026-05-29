@@ -11,9 +11,9 @@ const config = {
       precompress: true,
       strict: true,
       // Single-page app configuration
-      fallback: "index.html"
-    })
-  }
+      fallback: "index.html",
+    }),
+  },
 };
 
 export default config;

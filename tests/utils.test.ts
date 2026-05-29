@@ -4,7 +4,7 @@ const mocks = vi.hoisted(() => ({
   PUBLIC_BASE_URL: "https://data.publicledger.news",
   PUBLIC_RELEASE_VERSION: "1.0.0",
   PUBLIC_RELEASE_PUBLISHED_AT: "2026-01-01T00:00:00.000Z",
-  PUBLIC_RELEASE_CREATED_AT: "2026-01-01T00:00:00.000Z"
+  PUBLIC_RELEASE_CREATED_AT: "2026-01-01T00:00:00.000Z",
 }));
 
 vi.mock("$env/static/public", () => mocks);
