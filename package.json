@@ -1,7 +1,7 @@
 {
   "name": "publicledger-api",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.5",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -20,7 +20,8 @@
     "notebooks:check-clean": "scripts/check-notebooks-clean.sh",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@fontsource/pitagon-sans-mono": "^5.2.5"
