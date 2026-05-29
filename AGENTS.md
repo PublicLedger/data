@@ -8,6 +8,54 @@ Public Ledger data API — a public-facing data journalism platform serving Penn
 
 **This is production infrastructure serving public data.** Accuracy and reliability are critical.
 
+## Development Principles (AI Agent Guidance)
+
+Common patterns that lead to wasted time and repeated mistakes:
+
+### 1. Test Isolation
+Tests must not modify production files. Verify test scripts use proper temp directories and can't affect real project files through `cd` operations or absolute paths.
+
+### 2. Validation Consistency  
+All validation paths (npm scripts, pre-commit hooks, CI workflows) must use identical tooling and file patterns. Mismatches create "passes locally, fails in CI" scenarios.
+
+### 3. Configuration Completeness
+Environment-specific configs must cover all file types and execution contexts. Check that linting rules, globals, and type definitions match actual usage patterns.
+
+### 4. Simplicity Over Complexity
+Prefer simple solutions (package manager installs) over complex abstractions (custom features/wrappers) when functionality is equivalent. Complexity has maintenance cost.
+
+### 5. Atomic Multi-File Operations
+Scripts updating multiple files (versions, configs) must do so atomically with validation. Add safeguards against unrealistic inputs and provide single source of truth.
+
+### 6. Progressive Safeguards
+Layer multiple validation checks at different levels to catch different error types. One safeguard may miss edge cases another catches.
+
+### 7. Dependency Due Diligence
+Verify third-party tools and packages are actively maintained before adoption. Check last commit dates, deprecation notices, and migration paths.
+
+### 8. Documentation-First Actions
+**Consult existing documentation and constraints before implementing changes.** Check AGENTS.md, README.md, and config files for warnings about forbidden patterns or known issues.
+
+### 9. Environment Auditing
+Understand execution context before writing code:
+- What strictness modes are enabled? (bash `set -u`, PHPUnit `beStrictAbout*`, etc.)
+- What contracts does the caller expect? (exit codes, output silence, specific formats)
+- What dependencies must exist first? (variables initialized, functions defined, commands available)
+
+### 10. Measure What Matters
+Ensure tests and metrics measure production code, not test infrastructure or mocks. High coverage of test doubles provides false confidence.
+
+### 11. Error Signal Clarity
+Avoid patterns that mask failures or bury important output:
+- Shell logic (`&& ||` chains) that hides exit codes
+- Development tool noise drowning out test results  
+- Conditional logic with incorrect fallback paths
+
+### 12. Tool Configuration Alignment
+Development tools must match containerized and production environments. Document required paths, stubs, and environment-specific settings.
+
+---
+
 ## Tech Stack
 
 ### Frontend & API
@@ -84,7 +132,7 @@ src/
 
 **Always respect source site policies:**
 - Check robots.txt before scraping any domain
-- Use custom UserAgent: `PublicLedgerBot/1.0 (+https://publicledger.news/bot; contact@publicledger.news)`
+- Use custom UserAgent: `PublicLedgerBot/1.0 (+https://publicledger.news/; info@publicledger.news)`
 - Add 1-2 second delays between requests
 - Cache responses to avoid duplicate requests
 - Scrape during off-peak hours when possible
@@ -219,9 +267,9 @@ Hooks enforce:
 
 This project includes specialized AI agents in `.github/agents/`:
 
-### Data Journalism Pipeline
+### Public Ledger Data Pipeline
 
-Invoke with `@data-journalism` for:
+Invoke with `@publicledger` for:
 - Election data scraping and processing
 - Data quality validation
 - API endpoint development
