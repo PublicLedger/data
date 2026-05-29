@@ -1,41 +1,25 @@
-# Automated dependency updates for security and maintenance
 version: 2
 updates:
-  # Keep npm dependencies up to date
-  - package-ecosystem: npm
+  # Maintain npm dependencies (SvelteKit app)
+  - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: weekly
-      day: monday
+      interval: "weekly"
     open-pull-requests-limit: 10
-    labels:
-      - dependencies
-      - npm
-    commit-message:
-      prefix: deps
-    # Group non-security updates to reduce PR noise
     groups:
-      minor-and-patch:
-        patterns: ["*"]
+      dev-dependencies:
+        patterns:
+          - "*"
         update-types:
           - "minor"
           - "patch"
 
-  # Keep GitHub Actions up to date
-  - package-ecosystem: github-actions
+  # Python dependencies (notebooks) are manually maintained since they're rarely used
+  # Pinned in pyproject.toml to reduce churn; update only when actively working on notebooks
+
+  # Maintain GitHub Actions
+  - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 10
-    labels:
-      - dependencies
-      - github-actions
-    commit-message:
-      prefix: ci
-    groups:
-      actions-minor-patch:
-        patterns: ["*"]
-        update-types:
-          - "minor"
-          - "patch"
+      interval: "weekly"
+    open-pull-requests-limit: 5
