@@ -16,6 +16,8 @@
     "lint:fix": "eslint . --fix",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "notebooks:strip": "scripts/strip-notebook-outputs.sh",
+    "notebooks:check-clean": "scripts/check-notebooks-clean.sh",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui"
