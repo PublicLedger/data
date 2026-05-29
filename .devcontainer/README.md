@@ -5,14 +5,9 @@ This directory contains the development container configuration for reproducible
 ## Files
 
 - **devcontainer.json** - Main configuration defining the container setup
-- **devcontainer-lock.json** - VS Code-managed lock file for devcontainer features (auto-generated)
-- **setup.sh** - Post-creation script that installs UV and project dependencies
+- **setup.sh** - Post-creation script that installs system tools, UV, and project dependencies
 
 ## Version Pinning
-
-### Devcontainer Features (devcontainer-lock.json)
-
-The `devcontainer-lock.json` is **automatically managed by VS Code** and locks devcontainer features (like Node.js) with their SHA256 digests. Don't manually edit this file.
 
 ### UV Package Manager (setup.sh)
 
@@ -20,9 +15,13 @@ UV version and checksums are pinned at the top of `setup.sh`:
 
 ```bash
 UV_VERSION="0.5.10"
-UV_X86_SHA256="13452b7a99d953e970ec52861de03f6f2e00bfee2c4357bc63c292a70472b386"
-UV_AARCH64_SHA256="f4316a657c964994d7eb736ba875f3f685c4b61e961f514e98fb50ed181da72a"
 ```
+
+The script automatically:
+- Checks if UV is already installed
+- Compares installed version to required version
+- Only installs/upgrades if needed
+- Verifies downloads with SHA256 checksums (architecture-specific)
 
 ### Python Packages (uv.lock)
 
@@ -32,9 +31,10 @@ Python dependencies are locked in `uv.lock` at the repo root (managed by `uv syn
 
 **To update UV:**
 
-1. Edit version and checksums at top of `setup.sh`
-2. Get checksums from: `https://github.com/astral-sh/uv/releases/tag/{version}`
-3. Rebuild container to test
+1. Edit `UV_VERSION` at top of `setup.sh`
+2. Get SHA256 checksums from: `https://github.com/astral-sh/uv/releases/tag/{version}`
+3. Update both architecture checksums in the case statement
+4. Rebuild container to test
 
 **To update Python packages:**
 
@@ -43,31 +43,57 @@ uv lock --upgrade      # Update uv.lock
 uv sync               # Install updated packages
 ```
 
+## VS Code Extensions
+
+The devcontainer automatically installs these extensions:
+
+**Development:**
+- Prettier (code formatting)
+- ESLint (JavaScript/TypeScript linting)
+- YAML (workflow validation)
+- GitHub Pull Requests
+
+**Python & Data:**
+- Python + Pylance
+- Jupyter (core + keymap + renderers + cell tags + slideshow)
+
+**Testing:**
+- Vitest Explorer (test running and coverage visualization)
+
 ## Environment Variables
 
 Set in `devcontainer.json`:
 
-- `INSTALL_PINNED_UV=1` - Triggers UV installation from pinned version
-- `PATH` includes `~/.local/bin` for user-installed binaries
+- `PATH` includes `~/.local/bin` for user-installed binaries (UV, shellcheck, gh)
 
 ## Post-Creation Flow
 
 1. Container starts with Python 3.13 base image
-2. Node.js feature installs (locked by devcontainer-lock.json)
+2. Node.js LTS feature installs via devcontainer features
 3. `setup.sh` runs:
+   - Checks if system packages need installation (shellcheck, gh)
+   - Runs `apt-get update` only if packages are missing
+   - Installs shellcheck (for pre-commit hooks) if needed
    - Installs GitHub CLI if needed
-   - Downloads UV from pinned version with SHA256 verification
+   - Checks if UV is installed and at correct version
+   - Downloads UV from pinned version with SHA256 verification (if needed)
    - Installs UV to `~/.local/bin`
    - Runs `uv sync` to install Python dependencies from uv.lock
-   - Registers Jupyter kernel
+   - Registers Jupyter kernel with display name "Public Ledger - Data API"
+
+The setup script is idempotent — it only installs what's missing or outdated, making rebuilds faster.
 
 ## Troubleshooting
 
-**UV not found**: Ensure `INSTALL_PINNED_UV=1` is set in `devcontainer.json`
+**UV not found**: Check that `~/.local/bin` is in your PATH. Run `source ~/.bashrc` or restart the terminal.
 
 **Package missing**: Run `uv sync` from repo root, then restart kernel
 
-**Wrong Python version**: Check `python.defaultInterpreterPath` points to `.venv/bin/python`
+**Wrong Python version**: Check `python.defaultInterpreterPath` in `.vscode/settings.json` points to `.venv/bin/python`
+
+**Shellcheck not found**: Rebuild the container — shellcheck installs automatically via `setup.sh`
+
+**Tests not showing in sidebar**: Ensure Vitest extension (`vitest.explorer`) is installed and enabled in settings
 
 ## Common Operations
 
@@ -103,3 +129,18 @@ Or from command palette:
 - Press `F1`
 - Type: `Jupyter: Restart Kernel`
 - Press Enter
+
+### Run Tests with Coverage
+
+To generate a coverage report:
+
+```bash
+npm run test:coverage
+```
+
+This creates:
+- Terminal summary with coverage percentages
+- HTML report: `coverage/index.html` (open in browser)
+- LCOV report: `coverage/lcov.info` (for CI integration)
+
+The Vitest extension also shows inline coverage indicators in the editor when tests run.
