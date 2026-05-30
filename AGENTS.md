@@ -54,6 +54,12 @@ Avoid patterns that mask failures or bury important output:
 ### 12. Tool Configuration Alignment
 Development tools must match containerized and production environments. Document required paths, stubs, and environment-specific settings.
 
+### 13. Read Tests Before Fixing Them
+Tests with conditional logic (skipping checks when dependencies missing) are designed for multi-environment execution. Don't "fix" intentional flexibility by forcing dependencies to exist. Check what the test actually validates before changing the environment to satisfy it.
+
+### 14. Match Lockfile to CI Node Version
+package-lock.json format varies between npm versions. Generate lockfiles with the same Node/npm version used in CI (Node 20/npm 10) not local dev (Node 24/npm 11). Mismatches cause `npm ci` failures with "Missing: package@version from lock file" errors.
+
 ---
 
 ## Tech Stack
