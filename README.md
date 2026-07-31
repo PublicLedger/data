@@ -12,12 +12,14 @@ Public-facing data journalism platform serving Pennsylvania election results thr
 ## Tech Stack
 
 ### Frontend & API
+
 - **SvelteKit** — SSG/SPA framework serving static build and API routes
 - **TypeScript** — Type-safe API endpoints and utilities
 - **Vite** — Build tool and dev server
 - **Vitest** — Testing framework with coverage
 
 ### Data Pipeline
+
 - **Python 3.13+** — Data scraping and processing
 - **Jupyter Lab** — Interactive data exploration notebooks
 - **pandas** — Data manipulation and analysis
@@ -25,6 +27,7 @@ Public-facing data journalism platform serving Pennsylvania election results thr
 - **uv** — Python dependency management
 
 ### Quality & Automation
+
 - **ESLint** — JavaScript/TypeScript linting
 - **Prettier** — Code formatting
 - **Ruff** — Python linting and formatting
@@ -135,6 +138,7 @@ Election data is scraped using Jupyter notebooks in the `notebooks/` directory:
 - **PA_state_scraper_county_specific.ipynb** — Scrapes statewide results for specific counties
 
 Shared utilities:
+
 - **shared_setup.py** — Common imports, paths, and configuration
 - **shared_table_display.py** — Standardized data table formatting
 
@@ -233,7 +237,7 @@ node .github/skills/test-api-endpoint/scripts/test-endpoint.js /api/results/2024
 
 Or in VS Code with Copilot:
 
-```
+```text
 /test-api-endpoint /api/results/2024
 ```
 
@@ -247,12 +251,14 @@ npm run test:coverage    # With coverage report (HTML in coverage/)
 ```
 
 Test files in `tests/` validate:
+
 - API endpoint responses
 - Component rendering
 - Data utility functions
 - Build output (static files, compression)
 
 Coverage thresholds:
+
 - 95% statements, functions, lines
 - 78% branches
 
@@ -273,6 +279,7 @@ pre-commit install
 ```
 
 Hooks enforce:
+
 - Ruff lint and format (Python)
 - ESLint and Prettier (TypeScript/JavaScript)
 - Notebook output stripping
@@ -317,7 +324,7 @@ pre-commit run --all-files
 This repo uses Dependabot (`.github/dependabot.yml`) for automated dependency management:
 
 | Ecosystem | Frequency | Notes |
-|-----------|-----------|-------|
+| --------- | --------- | ----- |
 | `npm` | Weekly | SvelteKit, Vite, Vitest, and dev tools |
 | `github-actions` | Weekly | Workflow dependency updates |
 | `pip` | Disabled | Python deps manually maintained via `uv` |
@@ -343,6 +350,7 @@ On every push to `main`, `.github/workflows/release.yml` executes:
 **Infinite loop prevention:** Commits with `[skip ci]` bypass the workflow.
 
 **Developer workflow benefits:**
+
 - Merge PR → automatic version bump and release
 - No manual version file editing
 - Tests run automatically before release
@@ -375,6 +383,7 @@ On every push to `main`, `.github/workflows/release.yml` executes:
 ## Data Journalism Ethics
 
 **Always respect source site policies:**
+
 - Check robots.txt before scraping any domain
 - Use custom UserAgent: `PublicLedgerBot/1.0 (+https://publicledger.news/; info@publicledger.news)`
 - Add 1-2 second delays between requests
@@ -383,6 +392,7 @@ On every push to `main`, `.github/workflows/release.yml` executes:
 - Contact webmasters for large-scale scraping
 
 **Data Quality Standards:**
+
 - Verify totals match official sources
 - Check for duplicate or missing precincts
 - Validate date formats and election types
@@ -397,6 +407,7 @@ This project includes specialized AI agents in `.github/agents/`:
 ### @publicledger Agent
 
 Invoke with `@publicledger` for:
+
 - Election data scraping and processing
 - Data quality validation
 - API endpoint development
@@ -409,18 +420,21 @@ See [AGENTS.md](AGENTS.md) for development principles and detailed guidance.
 ### Coding Standards
 
 **TypeScript/JavaScript:**
+
 - Follow SvelteKit conventions for file-based routing
 - Use TypeScript for type safety in API routes
 - Prefix utility functions with descriptive namespaces
 - Use JSDoc comments for complex functions
 
 **Python (Notebooks):**
+
 - Follow PEP 8 style guidelines (enforced by Ruff)
 - Use type hints for function signatures
 - Document data sources and transformations
 - Include cell markdown explaining analysis steps
 
 **Markdown/Documentation:**
+
 - Keep README sections concise and scannable
 - Link to detailed docs in subdirectories
 - Update docs when changing workflows or APIs
@@ -434,6 +448,7 @@ See [AGENTS.md](AGENTS.md) for development principles and detailed guidance.
 - Semantic versioning follows conventional commits
 
 **Manual version sync** (for emergency fixes only):
+
 ```bash
 # Update package.json, then:
 npm install --package-lock-only
@@ -444,9 +459,10 @@ git commit -m "chore: bump version to X.Y.Z"
 ### Development Environment
 
 **Prerequisites:**
+
 - Node.js 20 LTS with npm
 - Python 3.13+
-- uv package manager (https://docs.astral.sh/uv/)
+- [uv package manager](https://docs.astral.sh/uv/)
 - Jupyter Lab (installed via `uv sync`)
 
 **Initial Setup:**
@@ -467,6 +483,7 @@ pre-commit install
 ```
 
 **Key configuration files:**
+
 - `.pre-commit-config.yaml` — Pre-commit hook configuration
 - `AGENTS.md` — Development principles and AI agent guidance
 - `package.json` — Node.js dependencies and scripts
@@ -509,7 +526,8 @@ Commits with `[skip ci]` in the message bypass the workflow.
 
 ### Common Issues and Solutions
 
-**Tests failing locally but passing in CI**
+#### Tests failing locally but passing in CI
+
 - **Symptoms:** `npm test` fails, but GitHub Actions CI passes
 - **Causes:** Stale dependencies, environment differences
 - **Solutions:**
@@ -518,7 +536,8 @@ Commits with `[skip ci]` in the message bypass the workflow.
   - Check Node.js version matches CI (Node.js 20 LTS)
   - Ensure Python 3.13+ is installed: `python --version`
 
-**Linting errors after pull**
+#### Linting errors after pull
+
 - **Symptoms:** `npm run lint` fails on files you didn't change
 - **Causes:** Prettier/ESLint version updates, new rules
 - **Solutions:**
@@ -526,7 +545,8 @@ Commits with `[skip ci]` in the message bypass the workflow.
   - Run `npm run format` to apply Prettier formatting
   - Check `.eslintrc` and `prettier.config.js` for rule changes
 
-**Notebook kernel not found**
+#### Notebook kernel not found
+
 - **Symptoms:** Jupyter can't find Python 3.13 kernel
 - **Causes:** Missing ipykernel installation, `.venv` not configured
 - **Solutions:**
@@ -535,7 +555,8 @@ Commits with `[skip ci]` in the message bypass the workflow.
   - In Jupyter, select **Kernel** → **Change Kernel** → **Python 3.13 (.venv)**
   - Verify `.venv/bin/python --version` shows Python 3.13
 
-**Build failing with module errors**
+#### Build failing with module errors
+
 - **Symptoms:** `npm run build` fails with import/module errors
 - **Causes:** Missing dependencies, TypeScript errors
 - **Solutions:**
@@ -544,7 +565,8 @@ Commits with `[skip ci]` in the message bypass the workflow.
   - Check `src/` for incorrect import paths
   - Verify `vite.config.ts` and `svelte.config.js` are correct
 
-**Pre-commit hooks failing**
+#### Pre-commit hooks failing
+
 - **Symptoms:** Git commit blocked by pre-commit hook errors
 - **Causes:** Notebook outputs not stripped, linting errors
 - **Solutions:**
@@ -553,7 +575,8 @@ Commits with `[skip ci]` in the message bypass the workflow.
   - Run `pre-commit run --all-files` to see all issues
   - Use `git commit --no-verify` only in emergencies
 
-**GitHub Pages deployment not updating**
+#### GitHub Pages deployment not updating
+
 - **Symptoms:** Site not reflecting latest changes after merge
 - **Causes:** Workflow failure, cache issues, DNS propagation
 - **Solutions:**
@@ -563,7 +586,8 @@ Commits with `[skip ci]` in the message bypass the workflow.
   - Hard refresh browser: `Ctrl+Shift+R` or `Cmd+Shift+R`
   - Check repository Settings → Pages for deployment status
 
-**Coverage report not generating**
+#### Coverage report not generating
+
 - **Symptoms:** `npm run test:coverage` completes but no `coverage/` directory
 - **Causes:** Vitest configuration issues
 - **Solutions:**
@@ -574,15 +598,16 @@ Commits with `[skip ci]` in the message bypass the workflow.
 
 ## Related Resources
 
-- **Project site:** https://data.publicledger.news
-- **Organization:** https://publicledger.news
-- **Repository:** https://github.com/PublicLedger/data
+- **Project site:** [data.publicledger.news](https://data.publicledger.news)
+- **Organization:** [publicledger.news](https://publicledger.news)
+- **Repository:** [PublicLedger/data](https://github.com/PublicLedger/data)
 
 ## Contributing
 
 See [AGENTS.md](AGENTS.md) for development principles and AI agent guidance.
 
 For major changes:
+
 1. Open an issue to discuss proposed changes
 2. Follow code style guidelines
 3. Add tests for new functionality
