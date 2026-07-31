@@ -50,7 +50,11 @@ uv sync              # Install Python dependencies
 jupyter lab          # Launch notebook environment
 ```
 
-**Notebook Kernel:** Notebooks use the Python 3.13 kernel from `.venv/`. The devcontainer setup script automatically configures this kernel via `ipykernel`.
+**Notebook Kernel:** Notebooks use the Python 3.13 kernel from `.venv/`. After running `uv sync`, register the kernel with:
+
+```sh
+uv run python -m ipykernel install --user --name=publicledger-data --display-name="Public Ledger - Data API"
+```
 
 ### Quality Checks
 
@@ -67,7 +71,6 @@ npm run notebooks:check-clean   # Verify notebooks are clean
 
 ```text
 data/
-├── .devcontainer/                          # Dev container config & setup script
 ├── .github/
 │   ├── agents/                             # Custom AI agents (@publicledger)
 │   ├── skills/                             # Reusable AI workflows (test-api-endpoint)
@@ -440,23 +443,34 @@ git commit -m "chore: bump version to X.Y.Z"
 
 ### Development Environment
 
-- Use the VS Code devcontainer for consistent Python/Node.js environment
-- Pre-commit hooks enforce code quality and linting
-- All dependencies managed via `package.json` (npm) and `pyproject.toml` (uv)
-- GitHub Actions CI validates all changes before merge
+**Prerequisites:**
+- Node.js 20 LTS with npm
+- Python 3.13+
+- uv package manager (https://docs.astral.sh/uv/)
+- Jupyter Lab (installed via `uv sync`)
 
-**Devcontainer includes:**
-- Python 3.13 with uv package manager
-- Node.js LTS with npm
-- Jupyter Lab for notebooks
-- All linting and testing tools
-- VS Code extensions for development
+**Initial Setup:**
+
+```sh
+# Install Node dependencies
+npm install
+
+# Install Python dependencies
+uv sync
+
+# Register Jupyter kernel
+uv run python -m ipykernel install --user --name=publicledger-data --display-name="Public Ledger - Data API"
+
+# Install pre-commit hooks
+uv tool install pre-commit
+pre-commit install
+```
 
 **Key configuration files:**
-- `.devcontainer/devcontainer.json` — Container features and VS Code extensions
-- `.devcontainer/setup.sh` — Post-create setup script
 - `.pre-commit-config.yaml` — Pre-commit hook configuration
 - `AGENTS.md` — Development principles and AI agent guidance
+- `package.json` — Node.js dependencies and scripts
+- `pyproject.toml` — Python dependencies and tools
 
 ## Deployment
 
@@ -491,24 +505,6 @@ The deployment workflow (`.github/workflows/release.yml`) runs on every push to 
 
 Commits with `[skip ci]` in the message bypass the workflow.
 
-## Development Container
-
-This project includes a VS Code devcontainer for reproducible development environments:
-
-```sh
-# Rebuild container after pulling changes
-Ctrl+Shift+P → "Dev Containers: Rebuild Container"
-```
-
-The devcontainer includes:
-- Python 3.13 with uv package manager
-- Node.js LTS with npm
-- Jupyter Lab for notebooks with Python 3.13 kernel (`.venv/`)
-- All VS Code extensions (ESLint, Prettier, Python, Vitest, etc.)
-- Pre-configured linting and formatting on save
-
-See [.devcontainer/README.md](.devcontainer/README.md) for details.
-
 ## Troubleshooting
 
 ### Common Issues and Solutions
@@ -518,9 +514,9 @@ See [.devcontainer/README.md](.devcontainer/README.md) for details.
 - **Causes:** Stale dependencies, environment differences
 - **Solutions:**
   - Run `npm install` to update dependencies
-  - Rebuild devcontainer: `Ctrl+Shift+P` → "Dev Containers: Rebuild Container"
   - Clear Vitest cache: `rm -rf node_modules/.vitest`
-  - Check Node.js version matches CI (should be LTS)
+  - Check Node.js version matches CI (Node.js 20 LTS)
+  - Ensure Python 3.13+ is installed: `python --version`
 
 **Linting errors after pull**
 - **Symptoms:** `npm run lint` fails on files you didn't change

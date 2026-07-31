@@ -1,15 +1,33 @@
+# General
 .DS_Store
-/tmp
+tmp/*
+output/
+*.log
+
+# Node.js
 node_modules
-/build
+npm-debug.log*
+yarn-error.log
+
+# Build artifacts
+build/
+dist/
 /.svelte-kit
 /package
+*.egg-info/
+
+# Environment variables
 .env
 .env.*
 !.env.example
+
+# IDE / editor
+.vscode/
+.idea/
+
+# Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-*.egg-info/
 
 # Python
 __pycache__/
@@ -19,6 +37,7 @@ __pycache__/
 .pytest_cache/
 .venv/
 venv/
+notebooks/cache/
 
 # Test artifacts
 /test-results/
